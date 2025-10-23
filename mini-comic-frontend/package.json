@@ -1,0 +1,31 @@
+{
+  "name": "mini-comic-frontend",
+  "version": "0.1.0",
+  "private": true,
+  "license": "MIT",
+  "scripts": {
+    "clean": "rimraf .next",
+    "dev": "npm run clean && npm run genabi && next dev",
+    "dev:3003": "npm run clean && npm run genabi && next dev -p 3003",
+    "dev:mock": "npm run ishhrunning && npm run clean && npm run genabi && next dev",
+    "build": "next build",
+    "start": "next start",
+    "genabi": "node ./scripts/genabi.mjs",
+    "ishhrunning": "node ./scripts/is-hardhat-node-running.mjs"
+  },
+  "dependencies": {
+    "@zama-fhe/relayer-sdk": "0.2.0",
+    "ethers": "^6.13.2",
+    "idb": "^8.0.3",
+    "next": "^15.4.2",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "web3.storage": "^4.5.5"
+  },
+  "devDependencies": {
+    "@fhevm/mock-utils": "0.1.0",
+    "@types/react": "19.2.2",
+    "rimraf": "^6.0.1",
+    "typescript": "^5.6.3"
+  }
+}

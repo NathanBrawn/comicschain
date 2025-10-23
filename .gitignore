@@ -1,0 +1,24 @@
+# Dependencies
+**/node_modules/
+
+# Builds and caches
+**/.next/
+**/artifacts/
+**/cache/
+**/.turbo/
+**/dist/
+**/out/
+**/build/
+**/coverage/
+
+# Env and local config
+**/.env*
+**/.env.local
+**/.envrc
+**/.DS_Store
+**/.idea/
+**/.vscode/
+
+# Hardhat deployments (kept)
+# keep deployments folder
+
