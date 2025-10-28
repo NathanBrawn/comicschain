@@ -2,6 +2,7 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   output: "export",
+  basePath: "/comicschain",
   reactStrictMode: true,
   trailingSlash: true,
   images: {
