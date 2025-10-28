@@ -1,11 +1,11 @@
 "use client";
-import { useEffect, useMemo, useState } from "react";
+import { Suspense, useEffect, useMemo, useState } from "react";
 import { ethers } from "ethers";
-import { useParams, useRouter } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import { MiniComicRegistryABI } from "@/abi/MiniComicRegistryABI";
 import { MiniComicRegistryAddresses } from "@/abi/MiniComicRegistryAddresses";
 
-export default function ComicDetail() {
+function ComicDetailInner() {
   const [provider, setProvider] = useState<ethers.BrowserProvider | null>(null);
   const [signer, setSigner] = useState<ethers.Signer | null>(null);
   const [chainId, setChainId] = useState<number | null>(null);
@@ -14,9 +14,9 @@ export default function ComicDetail() {
   const [owner, setOwner] = useState<string>("");
   const [listed, setListed] = useState<boolean>(false);
   const [userAddress, setUserAddress] = useState<string>("");
-  const params = useParams();
+  const searchParams = useSearchParams();
   const router = useRouter();
-  const tokenId = Number((params as any)?.id?.toString() || "0");
+  const tokenId = Number(searchParams?.get("id") || "0");
 
   useEffect(() => {
     if (!window.ethereum) return;
@@ -145,7 +145,7 @@ export default function ComicDetail() {
       await tx.wait();
     }
       setBusy("done");
-    router.push(`/reader/${tokenId}`);
+    router.push(`/reader?id=${tokenId}`);
     } catch (e) {
       setBusy("idle");
     }
@@ -277,4 +277,11 @@ export default function ComicDetail() {
   );
 }
 
+export default function ComicDetail() {
+  return (
+    <Suspense fallback={<div className="container"><div className="muted">Loading...</div></div>}>
+      <ComicDetailInner />
+    </Suspense>
+  );
+}
 

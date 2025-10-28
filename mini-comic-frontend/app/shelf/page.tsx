@@ -96,7 +96,7 @@ export default function ShelfPage() {
   };
 
   const openReader = async (tokenId: number) => {
-    if (!registry || !signer) { window.location.href = `/comic/${tokenId}`; return; }
+    if (!registry || !signer) { window.location.href = `/comic?id=${tokenId}`; return; }
     try {
       const addr = await signer.getAddress();
       const has = await registry.hasAccess(tokenId, addr);
@@ -142,7 +142,7 @@ export default function ShelfPage() {
           await tx.wait();
         }
       }
-      window.location.href = `/reader/${tokenId}`;
+      window.location.href = `/reader?id=${tokenId}`;
     } catch (e: any) {
       alert(e?.reason || e?.message || String(e));
     }

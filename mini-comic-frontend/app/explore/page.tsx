@@ -233,7 +233,7 @@ export default function Explore() {
             <div style={{ marginTop: 8, fontWeight: 700 }}>{meta.title || `#${tokenId}`}</div>
             <div className="muted" style={{ minHeight: 40 }}>{meta.description || ""}</div>
             <div className="row">
-              <a className="btn secondary" href={`/comic/${tokenId}`}>View</a>
+              <a className="btn secondary" href={`/comic?id=${tokenId}`}>View</a>
               <button className="btn" onClick={() => addToShelf(tokenId)}>加入书架</button>
             </div>
           </div>

@@ -1,4 +1,7 @@
+// @ts-expect-error - web3.storage types may not be available in static export
 import { Web3Storage, File } from "web3.storage";
+
+export const dynamic = "force-static";
 
 async function putWithPinata(files: File[], jwt: string) {
   const form = new FormData();
@@ -23,6 +26,7 @@ export async function POST(req: Request) {
   try {
     const formData = await req.formData();
     const files: File[] = [];
+    // @ts-expect-error - FormData.entries() is available in modern runtimes
     for (const [name, value] of formData.entries()) {
       if (value instanceof Blob) {
         files.push(new File([value], name));
@@ -93,7 +97,7 @@ export async function GET(req: Request) {
       if (!existsSync(filePath)) return new Response("Not found", { status: 404 });
       const data = readFileSync(filePath);
       const isJson = forceJson || /\.json$/i.test(filePath);
-      return new Response(data, {
+      return new Response(data.buffer.slice(data.byteOffset, data.byteOffset + data.byteLength) as ArrayBuffer, {
         status: 200,
         headers: {
           "Content-Type": isJson ? "application/json" : "application/octet-stream",

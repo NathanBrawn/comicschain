@@ -1,11 +1,13 @@
 "use client";
-import { useEffect, useMemo, useState } from "react";
+import { Suspense, useEffect, useMemo, useState } from "react";
 import { ethers } from "ethers";
+import { useSearchParams } from "next/navigation";
 import { MiniComicRegistryABI } from "@/abi/MiniComicRegistryABI";
 import { MiniComicRegistryAddresses } from "@/abi/MiniComicRegistryAddresses";
 
-export default function Reader({ params }: { params: { id: string } }) {
-  const tokenId = Number(params.id);
+function ReaderInner() {
+  const searchParams = useSearchParams();
+  const tokenId = Number(searchParams?.get("id") || "0");
   const [provider, setProvider] = useState<ethers.BrowserProvider | null>(null);
   const [signer, setSigner] = useState<ethers.Signer | null>(null);
   const [chainId, setChainId] = useState<number | null>(null);
@@ -73,4 +75,11 @@ export default function Reader({ params }: { params: { id: string } }) {
   );
 }
 
+export default function Reader() {
+  return (
+    <Suspense fallback={<div className="container"><div className="muted">Loading...</div></div>}>
+      <ReaderInner />
+    </Suspense>
+  );
+}
 
