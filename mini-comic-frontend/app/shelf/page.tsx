@@ -60,7 +60,8 @@ export default function ShelfPage() {
             const uri: string = info[0];
             let meta: ComicMeta = {};
             if (uri) {
-              const res = await fetch(`/api/ipfs?uri=${encodeURIComponent(uri)}&as=json`);
+              const base = (process.env.NEXT_PUBLIC_BASE_PATH || "").replace(/\/$/, "");
+              const res = await fetch(`${base}/api/ipfs?uri=${encodeURIComponent(uri)}&as=json`);
               if (res.ok) meta = await res.json();
             }
             arr.push({ tokenId: Number(id), meta });
@@ -157,7 +158,7 @@ export default function ShelfPage() {
             if (!provider) return;
             try { await provider.send("eth_requestAccounts", []); location.reload(); } catch {}
           }}>连接钱包</button> : null}
-          <a className="btn secondary" href="/explore">Explore</a>
+          <a className="btn secondary" href={(process.env.NEXT_PUBLIC_BASE_PATH || "") + "/explore"}>Explore</a>
         </div>
       </div>
       {items.length === 0 ? (
@@ -167,7 +168,7 @@ export default function ShelfPage() {
           {items.map(({ tokenId, meta }) => (
             <div key={tokenId} className="card">
               {meta.coverCID ? (
-                <img className="cover" src={`/api/ipfs?cid=${encodeURIComponent(meta.coverCID)}`} />
+                <img className="cover" src={`${(process.env.NEXT_PUBLIC_BASE_PATH || "").replace(/\/$/, "")}/api/ipfs?cid=${encodeURIComponent(meta.coverCID)}`} />
               ) : (
                 <div className="muted" style={{ height: 160, display: "flex", alignItems: "center", justifyContent: "center" }}>No Cover</div>
               )}

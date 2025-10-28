@@ -49,7 +49,8 @@ function ComicDetailInner() {
       setOwner(ownerAddr?.toLowerCase?.() || "");
       setListed(Boolean(listedFlag));
       if (uri) {
-        const res = await fetch(`/api/ipfs?uri=${encodeURIComponent(uri)}&as=json`);
+        const base = (process.env.NEXT_PUBLIC_BASE_PATH || "").replace(/\/$/, "");
+        const res = await fetch(`${base}/api/ipfs?uri=${encodeURIComponent(uri)}&as=json`);
         if (res.ok) {
           const j = await res.json();
           setMeta(j);
@@ -255,7 +256,7 @@ function ComicDetailInner() {
         <div className="muted">Loading metadata...</div>
       ) : (
         <div className="hero">
-          <img className="cover" src={`/api/ipfs?cid=${encodeURIComponent(meta.coverCID)}`} />
+          <img className="cover" src={`${(process.env.NEXT_PUBLIC_BASE_PATH || "").replace(/\/$/, "")}/api/ipfs?cid=${encodeURIComponent(meta.coverCID)}`} />
           <div>
             <div className="title">{meta.title}</div>
             <div className="muted" style={{ maxWidth: 580 }}>{meta.description}</div>

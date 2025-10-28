@@ -39,7 +39,8 @@ function ReaderInner() {
       const info = await registry.getComicInfo(tokenId);
       const uri: string = info[0];
       if (uri) {
-        const res = await fetch(`/api/ipfs?uri=${encodeURIComponent(uri)}&as=json`);
+        const base = (process.env.NEXT_PUBLIC_BASE_PATH || "").replace(/\/$/, "");
+        const res = await fetch(`${base}/api/ipfs?uri=${encodeURIComponent(uri)}&as=json`);
         if (res.ok) {
           const j = await res.json();
           setMeta(j);
@@ -59,7 +60,7 @@ function ReaderInner() {
         <div className="viewer">
           {max > 0 ? (
             <>
-              <img src={`/api/ipfs?cid=${encodeURIComponent(pages[page])}`}/>
+              <img src={`${(process.env.NEXT_PUBLIC_BASE_PATH || "").replace(/\/$/, "")}/api/ipfs?cid=${encodeURIComponent(pages[page])}`}/>
               <div className="row">
                 <button className="btn secondary" disabled={page <= 0} onClick={() => setPage((p) => Math.max(0, p - 1))}>Prev</button>
                 <span className="pill">{page + 1} / {max}</span>

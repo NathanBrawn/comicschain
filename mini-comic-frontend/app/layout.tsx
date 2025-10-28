@@ -10,8 +10,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <span className="pill">FHEVM</span>
           </div>
           <div className="toolbar">
-            <a className="btn secondary" href="/">Home</a>
-            <a className="btn" href="/create">Create</a>
+            <a className="btn secondary" href={(process.env.NEXT_PUBLIC_BASE_PATH || "") + "/"}>Home</a>
+            <a className="btn" href={(process.env.NEXT_PUBLIC_BASE_PATH || "") + "/create"}>Create</a>
           </div>
         </nav>
         {children}
